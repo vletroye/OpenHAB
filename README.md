@@ -1,5 +1,5 @@
 # About this repository
-This repository contain developments done around the (OpenHab)[https://www.openhab.org] installed on my Synology as explained [here](https://www.beatificabytes.be/install-openhab-2-on-synology).
+This repository contain developments done around the [OpenHab](https://www.openhab.org) installed on my Synology as explained [here](https://www.beatificabytes.be/install-openhab-2-on-synology).
 
 ## "Widgets"
 It contains json files exported from HABPanel's Custom Widgets I have created for my own purpose.
