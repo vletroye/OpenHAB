@@ -1,0 +1,40 @@
+{
+    "template": "<script type=\"text/ng-template\" id=\"confirmSliderModal.html\">\n  <div class=\"container\" style=\"padding: 30px; border: 1px solid #456;\">\n    <a ng-click=\"$close()\" class=\"pull-right btn btn-danger\">X</a>\n    <table>\n      <tr>\n        <td>\n          <h3 style=\"color: white\">\n            <div ng-if=\"itemState(config.item) == '100'\" style=\"color: #0db9f0\">Click if you really want to slide UP '{{ngModel.name}}':</div>\n            <div ng-if=\"itemState(config.item) == '0'\" style=\"color: Red\">Click if you really want to slide DOWN '{{ngModel.name}}':</div>\n            <div ng-if=\"itemState(config.item) != '100' && itemState(config.item) != '0'\" style=\"color: Red\">Unknow state for '{{ngModel.name}}. Click to force DOWN:'</div>\n          </h3>\n        </td>\n        <td>\n          <button class=\"pull-center btn btn-lg\"\n                  ng-if=\"itemState(config.item) == '100'\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item, '0');$close()\"> \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.confirm_icon || 'flowpipe'\" size=\"64\" state=\"itemState(config.item)\" />           \n          </button>\n          <button class=\"pull-center btn btn-lg\"\n                  ng-if=\"itemState(config.item) == '0'\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item, '100');$close()\"> \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.confirm_icon || 'returnpipe'\" size=\"64\" state=\"itemState(config.item)\" />\n          </button>\n          <button class=\"pull-center btn btn-lg\"\n                  ng-if=\"itemState(config.item) != '100' && itemState(config.item) != '0'\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item, '0');$close()\"> \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.confirm_icon || 'returnpipe'\" size=\"64\" state=\"itemState(config.item)\" />\n          </button>\n        </td>\n      </tr>\n    </table>\n\n  </div>\n</script>\n<h3 ng-if=\"config.item == NULL\" style=\"color: red\">Widget not properly configured</h3>\n<div ng-if=\"config.item != NULL\">\n  <div ng-if=\"itemState(config.item) == '100' && config.confirm_up == false\" >\n    <div ng-click=\"sendCmd(config.item, '0')\">\n      <div>{{ngModel.name}}</div>\n      <widget-icon iconset=\"'eclipse-smarthome-classic'\" icon=\"'flowpipe'\" backdrop=\"false\" center=\"true\" inline=\"false\"></widget-icon>\n      <widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'rollershutter'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"100\"></widget-icon>\n      <div style=\"color: #89a\">CLOSED</div>\n    </div>    \n  </div>\n  <div ng-if=\"itemState(config.item) == '0' && config.confirm_down == false\" >\n    <div ng-click=\"sendCmd(config.item, '100')\">\n      <div>{{ngModel.name}}</div>\n      <div style=\"color: #0db9f0\">OPENED</div>\n      <widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'rollershutter'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"0\"></widget-icon>\n      <widget-icon iconset=\"'eclipse-smarthome-classic'\" icon=\"'returnpipe'\" backdrop=\"false\" center=\"true\" inline=\"false\"></widget-icon>\n    </div>    \n  </div>\n  <div ng-if=\"!(itemState(config.item) == '100' && config.confirm_up == false) && !(itemState(config.item) == '0' && config.confirm_down == false)\" >\n    <div ng-click=\"openModal('confirmSliderModal.html', true, 'lg')\">\n      <div>{{ngModel.name}}</div>\n      <div ng-if=\"itemState(config.item) == '0'\" style=\"color: #0db9f0\">OPENED</div>\n      <div ng-if=\"itemState(config.item) == '100'\" >\n         <widget-icon iconset=\"config.confirm_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.confirm_icon || 'flowpipe'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" />\n      </div>\n      <widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'rollershutter'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"100\"></widget-icon>\n      <div ng-if=\"itemState(config.item) == '0'\" >\n        <widget-icon iconset=\"config.confirm_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.confirm_icon || 'returnpipe'\" size=\"64\"backdrop=\"false\" center=\"true\" inline=\"false\" />\n      </div>\n      <widget-icon iconset=\"'eclipse-smarthome-classic'\" icon=\"'shield'\" backdrop=\"true\" center=\"true\" inline=\"false\" state=\"0\"></widget-icon>\n      <div ng-if=\"itemState(config.item) != '100' && itemState(config.item) != '0'\" style=\"color: #89a\">Unknown</div>\n      <div ng-if=\"itemState(config.item) == '100'\" style=\"color: #89a\">CLOSED</div>\n    </div>\n  </div>\n</div>",
+    "name": "Confirm Slider",
+    "author": "vletroye",
+    "description": "Ask for confirmation before changing the state of a Slider",
+    "settings": [
+        {
+            "type": "item",
+            "id": "item",
+            "label": "openHab Item",
+            "description": "Item to be controlled by the Confirm Slider"
+        },
+        {
+            "type": "checkbox",
+            "id": "confirm_up",
+            "label": "Confirm UP",
+            "default": true,
+            "description": "Prompt to confirm when sliding UP"
+        },
+        {
+            "type": "checkbox",
+            "id": "confirm_down",
+            "default": true,
+            "label": "Confirm DOWN",
+            "description": "Prompt to confirm when sliding DOWN"
+        },
+        {
+            "type": "icon",
+            "id": "widget_icon",
+            "label": "Icon",
+            "description": "Icon used on the Widget to represent the item"
+        },
+        {
+            "type": "icon",
+            "id": "confirm_icon",
+            "label": "Confirmation Icon",
+            "description": "Icon used in the Confirmation popup"
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "template": "<div class=\"row\">\n  <div class=\"col-xs-12\"><h3 style=\"color: #ffaa00; line-height: .1em;\">{{ngModel.name}}</h3></div>\n</div>\n<br></br>\n<!--table border=\"1\">\n<tr class=\"row\" ng-repeat=\"item in itemsInGroup(config.group) track by $index\" ng-if=\"$index % 6 == 0\"> \n  <td class=\"col-xs-2\" style=\"vertical-align:bottom; padding: 5px 5px 5px 5px\" ng-repeat=\"idx in [$index+0,$index+1,$index+2,$index+3,$index+4,$index+5]\" ng-if=\"itemsInGroup(config.group)[idx].name\">\n  \t<div ng-init=\"model={'name': itemsInGroup(config.group)[idx].label, 'item': itemsInGroup(config.group)[idx].name, 'hidelabel': false, 'hideonoff': true, 'iconset': config.widget_icon_iconset, 'icon': config.widget_icon, 'icon_size': config.widget_icon_size } \">\n      <widget-switch ng-model=\"model\" />\n    </div>\n \t</td>\n</tr>\n</table-->\n<ul ng-repeat=\"light in itemsInGroup(config.group) track by $index\" ng-init=\"models={}\">\n  <li class=\"col-md-4\" ng-init=\"models[light.name] = {'name': itemsInGroup(config.group)[$index].label, 'item': itemsInGroup(config.group)[$index].name} \">\n    <div class=\"box\" style=\"height: {{config.widget_box_size}}px; margin: 5px\">\n      <widget-slider ng-model=\"models[light.name]\" />\n    </div>\n  </li>\n</ul>\n",
+    "name": "Display All Dimmers",
+    "author": "vletroye",
+    "description": "Display All Switches of a Group",
+    "settings": [
+        {
+            "type": "string",
+            "label": "Group name",
+            "description": "Name of the group  of switches to be displayed",
+            "id": "group"
+        },
+        {
+            "type": "number",
+            "id": "widget_box_size",
+            "label": "Box Size",
+            "default": "150",
+            "description": "Size of the Boxes"
+        }
+    ]
+}

@@ -1,0 +1,92 @@
+{
+    "template": "<!-- Modal popup to confirm the reset of total power consumption -->\n<script type=\"text/ng-template\" id=\"confirmResetModal.html\">\n  <div class=\"container\" style=\"padding: 30px; border: 1px solid #456;\">\n    \n    <!-- Close button to exit the modal popup -->\n    <div class=\"pull-right\" style=\"position:absolute;top:0;right:0;\">\n    \t<a ng-click=\"$close()\" class=\"pull-right btn btn-danger\">X</a>\n    </div>\n    <table>\n      <tr>\n        <td>\n          <h4 style=\"color: Red\">\n            <div>Click if you really want to reset '{{config.item_name}}': </div>\n          </h4>\n        </td>\n        <td>\n          <!-- when switched from OFF to ON the Energy meter value in the device is reset to zero. About a second later the switch is automatically moved back to OFF -->\n          <button class=\"pull-center btn btn-lg\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item_reset, 'ON');$close()\">             \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'smarthome-set'\" icon=\"config.confirm_icon || 'power-button'\" size=\"32\" />           \n          </button>\n        </td>\n      </tr>\n    </table>\n  </div>\n</script>\n\n<!-- Modal popup to change the 'LED ring color when the device is on/off' or trigger a color loop -->\n<script type=\"text/ng-template\" id=\"selectColor.html\">\n  <div class=\"container\" style=\"padding: 30px; border: 1px solid #456;width: 300px;\" oc-lazy-load=\"['/static/vletroye/fibaro.js']\" >\n    <div ng-controller=\"FibaroColorController\">\n      <!-- Close button to exit the modal popup and stop the color loop if any -->\n      <div class=\"pull-right\" style=\"position:absolute;top:0;right:0;\">\n        <a ng-click=\"stopColorLoop();$close()\" class=\"pull-right btn btn-danger\">X</a>\n      </div>\n\n      <!-- Knob to change the 'LED ring color when the device is on' -->\n      <div ng-init=\"knobon = {\n                      value: itemValue(config.item_on),\n                      options: {\n                      scale: {enabled: true,type: 'dots',color: 'gray',width: 2,spaceWidth: 10,quantity: 10,height: 8},\n                      skin: {type: 'tron',width: 5,color: 'orange',spaceWidth: 5},\n                      trackWidth: 30, barWidth: 30, step: 1, startAngle: 45, endAngle: 315, max: 9,\n                      trackColor: 'rgba(52,152,219,.1)', barColor: 'rgba(52,152,219,.5)', textColor: 'white',\n                      subText: {enabled: true,text: 'Color On',color: 'gray',font: 'auto'},\n                      rangesEnabled: true,\n                      ranges: [\t{min: 0,max: 1,barColor: 'darkgrey'},{min: 1.1,max: 2,barColor: 'lightgrey'},{min: 2.1,max: 3,barColor: 'white'},{min: 3.1,max: 4,barColor: 'red'},{min: 4.1,max: 5,barColor: 'green'},\n                      \t\t\t\t\t{min: 5.1,max: 6,barColor: 'blue'},{min: 6.1,max: 7,barColor: 'yellow'},{min: 7.1,max: 8,barColor: 'cyan'},{min: 8.1,max: 9,barColor: 'magenta'}]\n                      }\n                    };\">\n      </div>\n      <div>\n        <ui-knob value=\"knobon.value\" options=\"knobon.options\" ng-click=\"sendCmd(config.item_on, knobon.value)\"/>\n      </div>\n\n      <!-- Knob to change the 'LED ring color when the device is off' -->\n      <div ng-init=\"knoboff = {\n                      value: itemValue(config.item_off),\n                      options: {\n                      scale: {enabled: true,type: 'dots',color: 'gray',width: 2,spaceWidth: 10,quantity: 10,height: 8},\n                      skin: {type: 'tron',width: 5,color: 'orange',spaceWidth: 5},\n                      trackWidth: 30, barWidth: 30, step: 1, startAngle: 45, endAngle: 315, max: 9,\n                      trackColor: 'rgba(52,152,219,.1)', barColor: 'rgba(52,152,219,.5)', textColor: 'white',\n                      subText: {enabled: true,text: 'Color Off',color: 'gray',font: 'auto'},\n                      rangesEnabled: true,\n                      ranges: [\t{min: 0,max: 1,barColor: 'darkgrey'},{min: 1.1,max: 2,barColor: 'lightgrey'},{min: 2.1,max: 3,barColor: 'white'},{min: 3.1,max: 4,barColor: 'red'},{min: 4.1,max: 5,barColor: 'green'},\n                      \t\t\t\t\t{min: 5.1,max: 6,barColor: 'blue'},{min: 6.1,max: 7,barColor: 'yellow'},{min: 7.1,max: 8,barColor: 'cyan'},{min: 8.1,max: 9,barColor: 'magenta'}]\n                      }\n                    };\">\n      </div>\n      <div>\n        <ui-knob value=\"knoboff.value\" options=\"knoboff.options\" ng-click=\"sendCmd(config.item_off, knoboff.value)\"/>\n      </div>\n      \n      <!-- help about the status of the 'LED ring color' when set to 0, 1 or 2 -->\n      <ul style=\"color: white;\">\n        <li>0\tDisable Illumination.</li>\n        <li>1\tActive Power (Smooth).</li>\n        <li>2\tActive Power (Steps).</li>\n      </ul>\n      \n      <!-- Click this icon to trigger a color loop. It helps to visually identify a Wall Plug. --> \n      <div style=\"position:absolute;top:0;left:0;\">\n        <div ng-click=\"startColorLoop();\">\n          <a><img ng-src=\"/static/vletroye/images/colorloop1.png\" id=\"#colorLoopImg\" /></a>\n        </div>\n      </div>\n    </div>\n  </div>\n</script>\n\n<!-- Modal popup to confirm a switch to on or off -->\n<script type=\"text/ng-template\" id=\"confirmSwitchModal.html\">\n  <div class=\"container\" style=\"padding: 30px; border: 1px solid #456;\">\n    \n    <!-- Close button to exit the modal popup -->\n    <div class=\"pull-right\" style=\"position:absolute;top:0;right:0;\">\n    \t<a ng-click=\"$close()\" class=\"pull-right btn btn-danger\">X</a>\n    </div>\n    <table>\n      <tr>\n        <td>\n          <h4 style=\"color: white\">\n            <div ng-if=\"itemState(config.item) == 'OFF'\" style=\"color: #0db9f0\">Click if you really want to turn ON '{{config.item_name}}': </div>\n            <div ng-if=\"itemState(config.item) == 'ON'\" style=\"color: Red\">Click if you really want to turn OFF '{{config.item_name}}': </div>\n            <div ng-if=\"itemState(config.item) != 'OFF' && itemState(config.item) != 'ON'\" style=\"color: Red\">Unknow state for '{{config.item_name}}. Click to force ON:'</div>\n          </h4>\n        </td>\n        <td>\n          <button class=\"pull-center btn btn-lg\"\n                  ng-if=\"itemState(config.item) == 'OFF'\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item, 'ON');$close()\"> \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'smarthome-set'\" icon=\"config.confirm_icon || 'power-button'\" size=\"32\" state=\"itemState(config.item)\" />           \n          </button>\n          <button class=\"pull-center btn btn-lg\"\n                  ng-if=\"itemState(config.item) == 'ON'\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item, 'OFF');$close()\"> \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'smarthome-set'\" icon=\"config.confirm_icon || 'power-button'\" size=\"32\" state=\"itemState(config.item)\" />\n          </button>      \n          <button class=\"pull-center btn btn-lg\"\n                  ng-if=\"itemState(config.item) != 'OFF' && itemState(config.item) != 'ON'\"\n                  style= \"border: none; background: rgba(0,0,0,0); outline:none; \" \n                  ng-click=\"sendCmd(config.item, 'ON');$close()\"> \n            <widget-icon iconset=\"config.confirm_icon_iconset || 'smarthome-set'\" icon=\"config.confirm_icon || 'power-button'\" size=\"32\" state=\"itemState(config.item)\" />\n          </button>\n        </td>\n      </tr>\n    </table>\n  </div>\n</script>\n\n<div oc-lazy-load=\"['/static/vletroye/fibaro.js']\">\n  <h3 ng-if=\"config.item == NULL\" style=\"color: red\">Widget not properly configured</h3>\n  <div ng-if=\"config.item != NULL\" ng-controller=\"FibaroMainController\">\n    <!-- values set with ng-init does not exist ouside the div when costrained with a ng-if -->\n    <!--div ng-init=\"config = { item_on: config.item+'_Color_On', item_off: config.item+'_Color_Off', item_power: config.item+'_power', item_kwh: config.item+'_kwh' }\" ng-if=\"config.item_default\"></div>-->\n\n    <!--\n      0-item: {{config.item}}<br></br>\n      1-use label: {{config.item_label}}<br></br>\n      2-display name: {{config.item_display}}<br></br>\n      3-confirm on: {{config.confirm_on}}<br></br>\n      4-confirm off: {{config.confirm_off}}<br></br>\n      5-use pre: {{config.item_default}}<br></br>\n      6-item_on: {{config.item_on}}<br></br>\n      7-item_off: {{config.item_off}}<br></br>\n      8-item_power: {{config.item_power}}<br></br>\n      9-item_kwh: {{config.item_kwh}}<br></br>\n \t\t-->\n\n    <div ng-if=\"config.item_display == true\">\n      {{config.item_name}}\n    </div>\n    \n\t\t<!-- Click to switch on without confirmation -->\n    <div ng-if=\"itemState(config.item) == 'OFF' && config.confirm_on != true\" >\n      <div ng-click=\"sendCmd(config.item, 'ON')\" style=\"border-radius: 50%;border: 4px solid {{getColor(itemValue(config.item_off), 0)}};width: 72px;height: 72px;margin: 0 auto;\">\n        <a><widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'poweroutlet'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"OFF\"></widget-icon></a>\n      </div>    \n      <div style=\"color: {{getColor(itemValue(config.item_off),0)}}\">OFF</div>\n    </div>\n\n    <!-- Click to switch off without confirmation -->\n    <div ng-if=\"itemState(config.item) == 'ON' && config.confirm_off != true\" >\n      <div ng-click=\"sendCmd(config.item, 'OFF')\" style=\"border-radius: 50%;border: 4px solid {{getColor(itemValue(config.item_on),1)}};width: 72px;height: 72px;margin: 0 auto;\">\n        <a><widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'poweroutlet'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"ON\"></widget-icon></a>\n      </div>    \n      <div style=\"color: {{getColor(itemValue(config.item_on),1)}}\">ON</div>\n    </div>\n\n    <!-- Click to switch on/off with confirmation -->\n    <div ng-if=\"!(itemState(config.item) == 'OFF' && config.confirm_on != true) && !(itemState(config.item) == 'ON' && config.confirm_off != true)\" >\n      <!-- Click to switch on with confirmation -->\n      <div ng-if=\"itemState(config.item) != 'ON'\" style=\"color: {{getColor(itemValue(config.item_off),0)}}\">\n      \t<div ng-click=\"openModal('confirmSwitchModal.html', true, 'md')\" style=\"border-radius: 50%;border: 4px solid {{getColor(itemValue(config.item_off),0)}};width: 72px;height: 72px;margin: 0 auto;\">\n\t        <a><widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'poweroutlet'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"OFF\"></widget-icon></a>\n  \t    </div>\n      \tOFF\n      </div>\n      <!-- Click to switch off with confirmation -->\n      <div ng-if=\"itemState(config.item) == 'ON'\" style=\"color: {{getColor(itemValue(config.item_on),1)}}\">\n      \t<div ng-click=\"openModal('confirmSwitchModal.html', true, 'md')\" style=\"border-radius: 50%;border: 4px solid {{getColor(itemValue(config.item_on),1)}};width: 72px;height: 72px;margin: 0 auto;\">\n\t        <a><widget-icon iconset=\"config.widget_icon_iconset || 'eclipse-smarthome-classic'\" icon=\"config.widget_icon || 'poweroutlet'\" size=\"64\" backdrop=\"false\" center=\"true\" inline=\"false\" state=\"ON\"></widget-icon></a>\n  \t    </div>\n      \tON\n      </div>\n    </div>\n\n    <!-- Display the immediate power consumption -->\n    <div ng-if=\"itemValue(config.item_power) != 'N/A'\" style=\"position:absolute;top:0;left:0;color:#0db9f0\">\n      <div>{{itemValue(config.item_power)}} w</div>\n    </div>\n    <!-- Display the total power consumption -->\n    <div ng-if=\"itemValue(config.item_kwh) != 'N/A'\" >\n      <a ng-if=\"config.support_reset\"><div ng-click=\"openModal('confirmResetModal.html', true, 'md')\" style=\"position:absolute;top:0;right:0;color:#0db9f0\" >\n        <div>{{itemValue(config.item_kwh)}} kwh</div>\n        </div>\n      </a>\n      <div ng-if=\"!config.support_reset\" style=\"position:absolute;top:0;right:0;color:#0db9f0\" >\n        <div>{{itemValue(config.item_kwh)}} kwh</div>\n      </div>\n    </div>\n    <!-- Click to open the 'LED Ring color' configuration pane -->\n    <div ng-if=\"config.support_color\" style=\"position:absolute;bottom:0;left:0;\">\n        <a><widget-icon iconset=\"'eclipse-smarthome-classic'\" icon=\"'colorwheel'\" size=\"32\" backdrop=\"false\" center=\"true\" inline=\"false\" ng-click=\"openModal('selectColor.html', true, 'sm')\">X</widget-icon></a>\n    </div>\n    <!-- Display the color of the LED Ring when on and off only if defined (I.e.: > 2) -->\n    <div style=\"position:absolute;bottom:0;right:0;\">\n      <a><widget-icon ng-if=\"itemState(config.item) == 'ON' && config.confirm_off == true\" ng-click=\"switchConfirmOff()\" iconset=\"'eclipse-smarthome-classic'\" icon=\"'shield-0'\" size=\"32\" backdrop=\"false\" center=\"true\" inline=\"false\"></widget-icon></a>\n      <a><widget-icon ng-if=\"itemState(config.item) != 'ON' && config.confirm_on == true\" ng-click=\"switchConfirmOn()\" iconset=\"'eclipse-smarthome-classic'\" icon=\"'shield-0'\" size=\"32\" backdrop=\"false\" center=\"true\" inline=\"false\"></widget-icon></a>\n      <a><widget-icon ng-if=\"itemState(config.item) == 'ON' && config.confirm_off != true\" ng-click=\"switchConfirmOff()\" iconset=\"'eclipse-smarthome-classic'\" icon=\"'shield'\" size=\"32\" backdrop=\"false\" center=\"true\" inline=\"false\"></widget-icon></a>\n      <a><widget-icon ng-if=\"itemState(config.item) != 'ON' && config.confirm_on != true\"ng-click=\"switchConfirmOn()\" iconset=\"'eclipse-smarthome-classic'\" icon=\"'shield'\" size=\"32\" backdrop=\"false\" center=\"true\" inline=\"false\"></widget-icon></a>\n    </div>  \n  </div>\n</div>",
+    "name": "Fibaro Wall Plug",
+    "author": "vletroye",
+    "description": "Switch customized for Fibaro Wall Plugs",
+    "settings": [
+        {
+            "type": "item",
+            "id": "item",
+            "label": "Fibaro Wall Plug item",
+            "description": "Item linked to the 'Switch' channel of the Fibaro Wall Plug",
+            "default": ""
+        },
+        {
+            "type": "checkbox",
+            "id": "item_label",
+            "label": "Use Fibaro Wall Plug's label",
+            "default": true,
+            "description": "Use the label of the Fibaro Wall Plug instead of the name of this widget"
+        },
+        {
+            "type": "checkbox",
+            "id": "item_display",
+            "label": "Display the name on the Widget",
+            "description": "Display the name on the Widget",
+            "default": true
+        },
+        {
+            "type": "checkbox",
+            "id": "confirm_on",
+            "label": "Confirm ON",
+            "default": false,
+            "description": "Prompt to confirm when turning ON"
+        },
+        {
+            "type": "checkbox",
+            "id": "confirm_off",
+            "default": false,
+            "label": "Confirm OFF",
+            "description": "Prompt to confirm when turning OFF"
+        },
+        {
+            "type": "icon",
+            "id": "widget_icon",
+            "label": "Icon",
+            "description": "Icon used on the Widget to represent the Fibaro Wall Plug"
+        },
+        {
+            "type": "icon",
+            "id": "confirm_icon",
+            "label": "Confirmation Icon",
+            "description": "Icon used in the Confirmation popup when switching on/off the Fibaro Wall Plug"
+        },
+        {
+            "type": "checkbox",
+            "id": "item_default",
+            "label": "Use other items based on naming ?",
+            "default": true,
+            "description": "Use this options to use items named _reset, _Color_On, _Color_Off, _power and _kwh, instead of the items defined here under"
+        },
+        {
+            "type": "item",
+            "id": "item_reset",
+            "label": "Fibaro Wall Plug's reset item",
+            "description": "Item linked to the 'Reset the total power consumption' channel of the Fibaro Wall Plug"
+        },
+        {
+            "type": "item",
+            "id": "item_on",
+            "label": "Fibaro Wall Plug's \"color when on\" item",
+            "description": "Item linked to the 'LED ring colour when device is on' channel of the Fibaro Wall Plug"
+        },
+        {
+            "type": "item",
+            "id": "item_off",
+            "label": "Fibaro Wall Plug's \"color when off\" item",
+            "description": "Item linked to the 'LED ring colour when device is off' channel of the Fibaro Wall Plug"
+        },
+        {
+            "type": "item",
+            "description": "Item linked to the 'Sensor (power)' channel of the Fibaro Wall Plug",
+            "id": "item_power",
+            "label": "Fibaro Wall Plug's \"power sensor\" item"
+        },
+        {
+            "type": "item",
+            "description": "Item linked to the 'Electric meter (kWh)' channel of the Fibaro Wall Plug",
+            "id": "item_kwh",
+            "label": "Fibaro Wall Plug's \"electric meter\" item"
+        }
+    ]
+}
