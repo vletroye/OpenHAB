@@ -6,4 +6,4 @@ This Widget can be used in the [HABPanel](https://www.openhab.org/docs/configura
 
 See the [Wiki](https://github.com/vletroye/OpenHAB/wiki/Widget-Daikin-Airco) for a more detailed description.
 
-[Auto Mode](https://i.imgur.com/4qzDawh.png) [Fan Mode](https://i.imgur.com/uoPc37T.png)
+![Auto Mode](https://i.imgur.com/4qzDawh.png) ![Fan Mode](https://i.imgur.com/uoPc37T.png)
