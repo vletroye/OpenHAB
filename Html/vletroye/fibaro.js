@@ -1,7 +1,7 @@
 (function() {
 
   'use strict';
-  var app = angular.module('app', []); // inside [] you define your module dependencies
+  var app = angular.module('vletroye.fibaro.wallplug', []); // inside [] you define your module dependencies
   
   app.controller('FibaroColorController', ['$scope', 'OHService', function($scope, OHService) {
 		$scope.initOn = 0;

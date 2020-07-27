@@ -1,7 +1,7 @@
 (function() {
 
   'use strict';
-  var app = angular.module('app', []); // inside [] you define your module dependencies
+  var app = angular.module('vletroye.daikin.airco', []); // inside [] you define your module dependencies
 
   app.controller('DaikinMainController', ['$scope', 'OHService', function($scope, OHService) {
 		if ($scope.config.item_default) {
