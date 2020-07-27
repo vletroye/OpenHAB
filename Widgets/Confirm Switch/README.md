@@ -7,3 +7,5 @@ This Widget can be used in the [HABPanel](https://www.openhab.org/docs/configura
 The widget can be configured to request a confirmation before switching the item on or off. Ex.: to prevent you to turn off your NAS.
 
 See the [Wiki](https://github.com/vletroye/OpenHAB/wiki/Widget-Confirm-Switch) for a more detailed description.
+
+![Confirm Switch](https://i.imgur.com/KmcXcWS.png)
