@@ -98,7 +98,7 @@
             "id": "item_debug",
             "label": "Debug Info",
             "description": "Tick this box to display Debug Info (items' status)",
-            "default": true
+            "default": false
         }
     ]
 }
