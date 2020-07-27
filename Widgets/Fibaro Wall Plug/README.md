@@ -13,4 +13,7 @@ It can also trigger a color loop on the plug, which is useful to visually identi
 
 See the [Wiki](https://github.com/vletroye/OpenHAB/wiki/Widget-Fibaro-Wall-Plug) for a more detailed description.
 
-![Widget](https://i.imgur.com/sdmdPCc.png) ![Color Config](https://i.imgur.com/iyS6lDS.png)
+![Widget](https://i.imgur.com/sdmdPCc.png)
+![Color Config](https://i.imgur.com/iyS6lDS.png)
+![Confirm Switch](https://i.imgur.com/e9kklaO.png)
+![Confirm Reset](https://i.imgur.com/x81ZABm.png)
