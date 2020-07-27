@@ -7,3 +7,5 @@ This Widget can be used in the [HABPanel](https://www.openhab.org/docs/configura
 The widget can be configured to request a confirmation before moving the item up or down. Ex.: to prevent you to open the garage door by accident.
 
 See the [Wiki](https://github.com/vletroye/OpenHAB/wiki/Widget-Confirm-Rollershutter) for a more detailed description.
+
+![Confirm Rollershutter](https://i.imgur.com/JVVucm7.png)
