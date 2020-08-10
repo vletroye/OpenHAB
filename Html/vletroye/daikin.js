@@ -34,22 +34,20 @@
 			}
 		}
 		
-		//Set a default Set Point of none defined
-		$scope.retry_setpoint = 5;
+		//Set a default Set Point if none defined
+		$scope.retry_setpoint = 10;
 		$scope.checkSetPoint = function () {
 			var item = OHService.getItem($scope.config.item_setpoint);
-			if (item == null) {
-				if ($scope.retry_setpoint > 0) {
-					console.log('SetPoint not found:'+$scope.config.item_setpoint);
-					$scope.retry_setpoint = $scope.retry_setpoint -1;
-					setTimeout($scope.checkSetPoint, 1000);
-				} 
-			} else {
-				console.log('SetPoint found: '+$scope.itemState(item));
-				if ($scope.itemState(item) == 'N/A') {
-					console.log('SetPoint to 18');
-					$scope.sendCmd($scope.config.item_setpoint, 18);
-				}
+			var setpoint = 'N/A';
+			if (item != null)
+				setpoint = item.state;
+			console.log('SetPoint currently = '+setpoint);
+			if (setpoint == 'N/A'  && $scope.retry_setpoint > 0) {
+				$scope.retry_setpoint = $scope.retry_setpoint -1;
+				setTimeout($scope.checkSetPoint, 1000);
+			} else if (item != null && setpoint == 'N/A') {
+				console.log('Force SetPoint of '+$scope.config.item_setpoint+' to 18');
+				$scope.sendCmd($scope.config.item_setpoint, 18);
 			}
 		}
 				
