@@ -4,6 +4,8 @@
   var app = angular.module('vletroye.daikin.airco', []); // inside [] you define your module dependencies
 
   app.controller('DaikinMainController', ['$scope', 'OHService', function($scope, OHService) {
+		if (typeof $scope.config == 'undefined') return false;
+	  
 		if ($scope.config.item_default) {
 			$scope.config.item_setpoint = $scope.config.item+'_SetPoint';
 			$scope.config.item_mode = $scope.config.item+'_Mode';
@@ -16,7 +18,7 @@
 			$scope.config.item_powerful_mode = $scope.config.item+'_PowerFulMode';
 			$scope.config.item_special_mode = $scope.config.item+'_SpecialMode';
 		}
-		
+
 		//Fetch the label of the item as soon as available
 		$scope.retry_item = 5;
 		$scope.getName = function () {
@@ -33,7 +35,7 @@
 				$scope.config.item_name = item.label;
 			}
 		}
-		
+
 		//Set a default Set Point if none defined
 		$scope.retry_setpoint = 10;
 		$scope.checkSetPoint = function () {
@@ -56,9 +58,9 @@
 		} else {  
 			$scope.config.item_name = $scope.ngModel.name;
 		}
-		
+
 		$scope.checkSetPoint();
-		
+
 		$scope.fanSpeed = function(fan, level) {		
 			var fanId = fan.slice(fan.length - 1);
 			var fanLevel = Number.parseInt(fanId, 10);
@@ -70,7 +72,7 @@
 			} else {
 			  return false;
 			}
-		}				
+		}
 	}]
 	);
 })();
